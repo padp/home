@@ -1,0 +1,288 @@
+/* UACJ Paducah - Monitoring Systems home
+   Design tokens intentionally mirror granco_monitor/style.css and
+   get-log-files/styles.css so the suite reads as one system. */
+
+:root {
+  color-scheme: light dark;
+  --color-bg: #eef1f6;
+  --color-surface: #ffffff;
+  --color-border: #dde3ea;
+  --color-text: #1c2430;
+  --color-text-muted: #5b6675;
+  --color-accent: #2563eb;
+  --color-accent-dark: #1d4ed8;
+  --color-accent-soft: #e6eefe;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(15, 23, 42, 0.1), 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-lift: 0 10px 20px rgba(15, 23, 42, 0.1), 0 3px 6px rgba(15, 23, 42, 0.07);
+
+  --live: #16a34a;
+  --live-soft: #e7f6ec;
+  --pending: #b45309;
+  --pending-soft: #fef3e2;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #14161a;
+    --color-surface: #1e2126;
+    --color-border: #2c2f36;
+    --color-text: #e8eaed;
+    --color-text-muted: #9aa0a6;
+    --color-accent: #3b82f6;
+    --color-accent-dark: #2563eb;
+    --color-accent-soft: #1e2c4d;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-lift: 0 10px 20px rgba(0, 0, 0, 0.5), 0 3px 6px rgba(0, 0, 0, 0.4);
+
+    --live: #4ade80;
+    --live-soft: #14301f;
+    --pending: #fbbf24;
+    --pending-soft: #3a2e14;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 0 3rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------ */
+/* Header                                                         */
+/* ------------------------------------------------------------ */
+
+.app-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+
+.app-header-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.app-header-subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+/* ------------------------------------------------------------ */
+/* Layout                                                         */
+/* ------------------------------------------------------------ */
+
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.intro {
+  padding: 2.25rem 0 0.5rem;
+  max-width: 62ch;
+}
+
+.intro h1 {
+  margin: 0 0 0.6rem;
+  font-size: 1.9rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.intro p {
+  margin: 0 0 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.section-label {
+  margin: 2.25rem 0 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------ */
+/* System cards                                                   */
+/* ------------------------------------------------------------ */
+
+.systems {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.15rem 1.25rem 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+a.card:hover,
+a.card:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--color-accent);
+}
+
+a.card:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.card-go {
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+a.card:hover .card-go .arrow,
+a.card:focus-visible .card-go .arrow {
+  transform: translateX(3px);
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+/* Not-yet-deployed systems */
+.card.pending {
+  background: transparent;
+  border-style: dashed;
+  box-shadow: none;
+}
+
+.card.pending h2 {
+  color: var(--color-text-muted);
+}
+
+.card.pending .card-go {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------ */
+/* Badges                                                         */
+/* ------------------------------------------------------------ */
+
+.badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.badge-live {
+  color: var(--live);
+  background: var(--live-soft);
+}
+
+.badge-pending {
+  color: var(--pending);
+  background: var(--pending-soft);
+}
+
+/* ------------------------------------------------------------ */
+/* Footer                                                         */
+/* ------------------------------------------------------------ */
+
+.page-footer {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.825rem;
+  color: var(--color-text-muted);
+}
+
+.page-footer p {
+  margin: 0 0 0.4rem;
+}
+
+@media (max-width: 600px) {
+  .intro {
+    padding-top: 1.5rem;
+  }
+  .intro h1 {
+    font-size: 1.55rem;
+  }
+  .systems {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .arrow {
+    transition: none;
+  }
+  a.card:hover,
+  a.card:focus-visible {
+    transform: none;
+  }
+}

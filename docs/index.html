@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UACJ Paducah Monitoring Systems</title>
+  <meta name="description" content="Entry point for the UACJ Paducah extrusion plant monitoring dashboards.">
+  <link rel="icon" type="image/png" href="uacj-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header class="app-header">
+    <span class="app-header-title">UACJ Paducah</span>
+    <span class="app-header-subtitle">Monitoring Systems</span>
+  </header>
+
+  <div class="wrap">
+    <section class="intro">
+      <h1>Plant monitoring dashboards</h1>
+      <p>
+        Each system below polls equipment on the plant floor directly, records what it
+        sees, and publishes a live dashboard you can open from any browser on any device.
+        Together they cover log delivery, the presses, the Granco saw, and the aging ovens.
+      </p>
+      <p>
+        Pick a system to open its dashboard.
+      </p>
+    </section>
+
+    <h2 class="section-label">Live systems</h2>
+
+    <ul class="systems">
+      <li>
+        <a class="card" href="https://padp.github.io/get-log-files/">
+          <div class="card-top">
+            <h2>Log Table Monitoring System</h2>
+            <span class="badge badge-live">Live</span>
+          </div>
+          <p>
+            Tracks log loads delivered to the extrusion log table &mdash; per-shift counts,
+            recent delivery events, schedule adherence, and camera-verified reconciliation
+            with supervisory override.
+          </p>
+          <span class="card-go">Open dashboard <span class="arrow">&rarr;</span></span>
+        </a>
+      </li>
+
+      <li>
+        <a class="card" href="https://padp.github.io/picos/">
+          <div class="card-top">
+            <h2>Press Monitoring System</h2>
+            <span class="badge badge-live">Live</span>
+          </div>
+          <p>
+            Live press datastream &mdash; uptime, cycle data, and operator monitoring,
+            read straight off the press controls.
+          </p>
+          <span class="card-go">Open dashboard <span class="arrow">&rarr;</span></span>
+        </a>
+      </li>
+
+      <li>
+        <a class="card" href="https://padp.github.io/granco_monitor/">
+          <div class="card-top">
+            <h2>Granco Saw Monitoring System</h2>
+            <span class="badge badge-live">Live</span>
+          </div>
+          <p>
+            Saw cycle monitoring &mdash; recent cuts, part numbers, run state and staffing,
+            plus recipes, shift details, schedule and leaderboard.
+          </p>
+          <span class="card-go">Open dashboard <span class="arrow">&rarr;</span></span>
+        </a>
+      </li>
+    </ul>
+
+    <h2 class="section-label">In development</h2>
+
+    <ul class="systems">
+      <li>
+        <div class="card pending">
+          <div class="card-top">
+            <h2>Large Aging Oven Monitoring System</h2>
+            <span class="badge badge-pending">Coming soon</span>
+          </div>
+          <p>
+            Uptime and cycle monitoring for the large aging oven &mdash; zone temperatures,
+            burner activity, cycle time remaining and fault-lock status. The poller has run
+            continuously since October 2025; the dashboard is being built on top of it.
+          </p>
+          <span class="card-go">Dashboard not yet published</span>
+        </div>
+      </li>
+
+      <li>
+        <div class="card pending">
+          <div class="card-top">
+            <h2>Small Aging Oven Monitoring System</h2>
+            <span class="badge badge-pending">Coming soon</span>
+          </div>
+          <p>
+            The second aging oven, to be monitored alongside the large oven under the same
+            system. Controller tag discovery is still in progress.
+          </p>
+          <span class="card-go">Dashboard not yet published</span>
+        </div>
+      </li>
+    </ul>
+
+    <footer class="page-footer">
+      <p>UACJ Automotive Whitehall Industries &mdash; Paducah extrusion plant.</p>
+      <p>Dashboards update on their own; leave one open on a screen and it stays current.</p>
+    </footer>
+  </div>
+</body>
+</html>
