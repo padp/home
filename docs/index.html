@@ -7,6 +7,7 @@
   <meta name="description" content="Entry point for the UACJ Paducah extrusion plant monitoring dashboards.">
   <link rel="icon" type="image/png" href="uacj-icon.png">
   <link rel="stylesheet" href="styles.css">
+  <script src="vision-hint.js" defer></script>
 </head>
 
 <body>
@@ -69,6 +70,20 @@
           <p>
             Saw cycle monitoring &mdash; recent cuts, part numbers, run state and staffing,
             plus recipes, shift details, schedule and leaderboard.
+          </p>
+          <span class="card-go">Open dashboard <span class="arrow">&rarr;</span></span>
+        </a>
+      </li>
+
+      <li>
+        <a class="card" href="http://PAD-LAPTOP-03:5057" id="vision-db-link" target="_blank" rel="noopener noreferrer">
+          <div class="card-top">
+            <h2>Vision System Database</h2>
+            <span class="badge badge-live">Live</span>
+          </div>
+          <p>
+            Vision system data, hosted locally on the collector PC. Only reachable
+            from the plant network &mdash; off-site, this link won't load.
           </p>
           <span class="card-go">Open dashboard <span class="arrow">&rarr;</span></span>
         </a>
