@@ -23,12 +23,13 @@ Deploy from a branch, `main` / `/docs`), matching how `get-log-files` and
 
 ## Adding a system
 
-Cards live in `docs/index.html` under a single `<ul class="systems">` list. Copy an
-existing `<li>` and adjust the heading, badge, description and `href`. A system that
-isn't live yet should use `<div class="card pending">` with a
-`<span class="badge badge-pending">` instead of `<a class="card" href="...">` with
-`badge-live` -- see git history for the exact markup the two oven cards used before their
-dashboard shipped.
+Cards live in `docs/index.html` under two `<ul class="systems">` lists: **Live
+monitoring** (real-time dashboards) and **History & review** (search/analysis tools over
+past data). Copy an existing `<li>` from whichever fits and adjust the heading, badge,
+description and `href`. A system that isn't live yet should use
+`<div class="card pending">` with a `<span class="badge badge-pending">` instead of
+`<a class="card" href="...">` with `badge-live` -- see git history for the exact markup
+the two oven cards used before their dashboard shipped.
 
 ## Plant-network-only cards (Vision System Database, Press History Search)
 
