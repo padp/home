@@ -7,7 +7,7 @@
   <meta name="description" content="Entry point for the UACJ Paducah extrusion plant monitoring dashboards.">
   <link rel="icon" type="image/png" href="uacj-icon.png">
   <link rel="stylesheet" href="styles.css">
-  <script src="vision-hint.js" defer></script>
+  <script src="local-tool-hint.js" defer></script>
 </head>
 
 <body>
@@ -76,7 +76,36 @@
       </li>
 
       <li>
-        <a class="card" href="http://PAD-LAPTOP-03:5057" id="vision-db-link" target="_blank" rel="noopener noreferrer">
+        <a class="card" href="https://padp.github.io/oven_monitor/?oven=large">
+          <div class="card-top">
+            <h2>Large Aging Oven Monitoring System</h2>
+            <span class="badge badge-live">Live</span>
+          </div>
+          <p>
+            Uptime and cycle monitoring for the large aging oven &mdash; zone temperatures,
+            burner activity, cycle time remaining and fault-lock status.
+          </p>
+          <span class="card-go">Open dashboard <span class="arrow">&rarr;</span></span>
+        </a>
+      </li>
+
+      <li>
+        <a class="card" href="https://padp.github.io/oven_monitor/?oven=small">
+          <div class="card-top">
+            <h2>Small Aging Oven Monitoring System</h2>
+            <span class="badge badge-live">Live</span>
+          </div>
+          <p>
+            Uptime and cycle monitoring for the second aging oven, alongside the large
+            oven under the same system.
+          </p>
+          <span class="card-go">Open dashboard <span class="arrow">&rarr;</span></span>
+        </a>
+      </li>
+
+      <li>
+        <a class="card" href="http://PAD-LAPTOP-03:5057" target="_blank" rel="noopener noreferrer"
+           data-local-notice="Opening the Vision System Database in a new tab — it only loads from the plant network. If that tab shows a connection error, that's why.">
           <div class="card-top">
             <h2>Vision System Database</h2>
             <span class="badge badge-live">Live</span>
@@ -88,38 +117,20 @@
           <span class="card-go">Open dashboard <span class="arrow">&rarr;</span></span>
         </a>
       </li>
-    </ul>
-
-    <h2 class="section-label">In development</h2>
-
-    <ul class="systems">
-      <li>
-        <div class="card pending">
-          <div class="card-top">
-            <h2>Large Aging Oven Monitoring System</h2>
-            <span class="badge badge-pending">Coming soon</span>
-          </div>
-          <p>
-            Uptime and cycle monitoring for the large aging oven &mdash; zone temperatures,
-            burner activity, cycle time remaining and fault-lock status. The poller has run
-            continuously since October 2025; the dashboard is being built on top of it.
-          </p>
-          <span class="card-go">Dashboard not yet published</span>
-        </div>
-      </li>
 
       <li>
-        <div class="card pending">
+        <a class="card" href="http://10.0.21.130:3080" target="_blank" rel="noopener noreferrer"
+           data-local-notice="Opening Press History Search in a new tab — it only loads from the plant network. If that tab shows a connection error, that's why.">
           <div class="card-top">
-            <h2>Small Aging Oven Monitoring System</h2>
-            <span class="badge badge-pending">Coming soon</span>
+            <h2>Press History Search</h2>
+            <span class="badge badge-live">Live</span>
           </div>
           <p>
-            The second aging oven, to be monitored alongside the large oven under the same
-            system. Controller tag discovery is still in progress.
+            Search, chart, and flag anomalies across press &amp; furnace history. Hosted
+            locally on the plant network &mdash; off-site, this link won't load.
           </p>
-          <span class="card-go">Dashboard not yet published</span>
-        </div>
+          <span class="card-go">Open dashboard <span class="arrow">&rarr;</span></span>
+        </a>
       </li>
     </ul>
 

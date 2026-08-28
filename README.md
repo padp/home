@@ -3,10 +3,11 @@
 Landing page for the UACJ Paducah plant monitoring dashboards. It explains what the
 monitoring suite is and links out to each system's dashboard.
 
-Static HTML/CSS, no build step. One small vanilla-JS file (`docs/vision-hint.js`) adds a
-click-time explanation to one card; everything else is plain markup. Served by GitHub
-Pages from `docs/` on `main` (Settings -> Pages -> Source: Deploy from a branch, `main` /
-`/docs`), matching how `get-log-files` and `granco_monitor` are published.
+Static HTML/CSS, no build step. One small vanilla-JS file (`docs/local-tool-hint.js`)
+adds a click-time explanation to the plant-network-only cards; everything else is plain
+markup. Served by GitHub Pages from `docs/` on `main` (Settings -> Pages -> Source:
+Deploy from a branch, `main` / `/docs`), matching how `get-log-files` and
+`granco_monitor` are published.
 
 ## Systems linked
 
@@ -15,46 +16,45 @@ Pages from `docs/` on `main` (Settings -> Pages -> Source: Deploy from a branch,
 | Log Table Monitoring | `padp/get-log-files` | https://padp.github.io/get-log-files/ | Live |
 | Press Monitoring | `padp/picos` | https://padp.github.io/picos/ | Live |
 | Granco Saw Monitoring | `padp/granco_monitor` | https://padp.github.io/granco_monitor/ | Live |
+| Large Aging Oven | `padp/oven_monitor` | https://padp.github.io/oven_monitor/?oven=large | Live |
+| Small Aging Oven | `padp/oven_monitor` | https://padp.github.io/oven_monitor/?oven=small | Live |
 | Vision System Database | n/a (local, PAD-LAPTOP-03:5057) | http://PAD-LAPTOP-03:5057 | Live, plant-network only |
-| Large Aging Oven | `padp/oven_monitor` | not published yet | Coming soon |
-| Small Aging Oven | `padp/oven_monitor` | not published yet | Coming soon |
+| Press History Search | Press History UI/v2 (local, 10.0.21.130:3080) | http://10.0.21.130:3080 | Live, plant-network only |
 
-## Adding a system, or turning on an oven
+## Adding a system
 
-Cards live in `docs/index.html` under two `<ul class="systems">` lists: **Live systems**
-and **In development**. To promote an oven once its dashboard ships, move that card into
-the live list and change the wrapper from
+Cards live in `docs/index.html` under a single `<ul class="systems">` list. Copy an
+existing `<li>` and adjust the heading, badge, description and `href`. A system that
+isn't live yet should use `<div class="card pending">` with a
+`<span class="badge badge-pending">` instead of `<a class="card" href="...">` with
+`badge-live` -- see git history for the exact markup the two oven cards used before their
+dashboard shipped.
 
-```html
-<div class="card pending">              <span class="badge badge-pending">Coming soon</span>
-```
+## Plant-network-only cards (Vision System Database, Press History Search)
 
-to
+Both link to tools hosted locally on the plant LAN, not reachable from the public
+internet -- `http://PAD-LAPTOP-03:5057` and `http://10.0.21.130:3080` respectively. Two
+things make these different from the other five:
 
-```html
-<a class="card" href="...">             <span class="badge badge-live">Live</span>
-```
-
-and change the closing tag to match. Swap the trailing
-`<span class="card-go">Dashboard not yet published</span>` for
-`<span class="card-go">Open dashboard <span class="arrow">&rarr;</span></span>`.
-
-## Vision System Database card
-
-This card links to `http://PAD-LAPTOP-03:5057`, a tool hosted locally on a collector PC
-on the plant LAN -- not reachable from the public internet. Two things make this card
-different from the other three:
-
-- It's plain `http://`, not `https://`, and this page is served over `https://`. Browsers
-  block active requests (`fetch`/`XHR`/`iframe`) from an https page to an http target as
-  "mixed content" -- this is a hard platform rule, not something client-side code can work
-  around. That means this page can never *check* whether the tool is reachable before the
-  visitor clicks, and can never detect whether a click succeeded or failed.
-- It opens in a new tab (`target="_blank"`) instead of navigating this page away. If the
+- They're plain `http://`, not `https://`, and this page is served over `https://`.
+  Browsers block active requests (`fetch`/`XHR`/`iframe`) from an https page to an http
+  target as "mixed content" -- this is a hard platform rule, not something client-side
+  code can work around. That means this page can never *check* whether a tool is
+  reachable before the visitor clicks, and can never detect whether a click succeeded or
+  failed.
+- Both open in a new tab (`target="_blank"`) instead of navigating this page away. If the
   visitor isn't on the plant network, only that disposable new tab shows the browser's
-  native connection-error page -- this homepage tab stays open. `docs/vision-hint.js`
-  shows a small toast at the moment of the click explaining that the tool only works
-  on-site, since that's the best available substitute for detecting failure directly.
+  native connection-error page -- this homepage tab stays open. `docs/local-tool-hint.js`
+  shows a small toast at the moment of the click (driven by each link's
+  `data-local-notice` attribute) explaining that the tool only works on-site, since
+  that's the best available substitute for detecting failure directly. Add
+  `data-local-notice="..."` to any future local-only link to get the same toast for free.
+
+Press History Search (`Press History UI/v2/p.html`) wasn't reachable by URL at all until
+a static-file route was added to its Tornado backend (`file_server.py`) alongside the
+existing API routes -- see the comment above `initialize_api()`'s static routes there.
+That backend runs as a long-lived process via `scheduled/run_webapp.cmd`; it needs to be
+restarted to pick up that change (it won't hot-reload on its own).
 
 **Abandoned approach -- IP-based gating.** The original design hid this card entirely
 and only revealed it once a client-side check matched the visitor's public IP against the
