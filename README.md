@@ -18,6 +18,7 @@ Deploy from a branch, `main` / `/docs`), matching how `get-log-files` and
 | Granco Saw Monitoring | `padp/granco_monitor` | https://padp.github.io/granco_monitor/ | Live |
 | Large Aging Oven | `padp/oven_monitor` | https://padp.github.io/oven_monitor/?oven=large | Live |
 | Small Aging Oven | `padp/oven_monitor` | https://padp.github.io/oven_monitor/?oven=small | Live |
+| Recipe Setpoint Sync | `padp/index-scs` (local, uacj-mengr45:3005) | http://uacj-mengr45:3005/ | Live, plant-network only |
 | Vision System Database | n/a (local, PAD-LAPTOP-03:5057) | http://PAD-LAPTOP-03:5057 | Live, plant-network only |
 | Press History Search | Press History UI/v2 (local, 10.0.21.130:3080) | http://10.0.21.130:3080 | Live, plant-network only |
 
