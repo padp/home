@@ -294,15 +294,6 @@ a.card:focus-visible .card-go .arrow {
   background: var(--down-soft);
 }
 
-/* Age line under a card's description, e.g. "data 2 min old". Only rendered
-   for systems that expose a real data-age signal - see status-check.js. */
-.card-age {
-  display: block;
-  margin-top: 0.35rem;
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-}
-
 /* ------------------------------------------------------------ */
 /* Footer                                                         */
 /* ------------------------------------------------------------ */

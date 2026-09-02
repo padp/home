@@ -42,10 +42,12 @@ the two oven cards used before their dashboard shipped.
 
 The "Live" badge used to be a static claim typed into the markup -- it said Live whether
 the collector had written a row thirty seconds ago or died three days ago.
-`docs/status-check.js` now asks each system's API on page load and reports the answer:
-**Checking** -> **Live**, **Stale**/**Stalled**, or **No response**, with the reason in
-the badge's `title` and, where a real data age exists, a "Data 4 min old." line on the
-card.
+`docs/status-check.js` now asks each system's API on page load and reports the answer in
+that same badge: **Checking** -> **Live**, **Stale**/**Stalled**, or **No response**, with
+the detail (including data age, where a real one exists) in the badge's `title` tooltip.
+The badge is the only thing the script writes to - carrying the state in the element
+already sitting in the card's corner, rather than adding a second line of text under the
+description saying the same thing.
 
 Two things to understand before extending it:
 

@@ -6,6 +6,12 @@
  * collector had written a row in the last thirty seconds or died three days
  * ago. This asks each API and reports the answer.
  *
+ * The badge in the card's top-right corner is the ONLY thing this writes to -
+ * Live / Stale / Stalled / No response, with the detail (including data age,
+ * where a real one exists) in its title tooltip. An earlier version also
+ * appended a "Data 4 min old." line into the card body; that was redundant
+ * with the badge it sat under and is gone.
+ *
  * Two things worth knowing before changing any of this:
  *
  * 1. "Recent data" and "recent production" are NOT the same question, and only
@@ -108,18 +114,6 @@
     if (title) badge.title = title;
   }
 
-  function setAgeLine(card, text) {
-    var line = card.querySelector(".card-age");
-    if (!line) {
-      var para = card.querySelector("p");
-      if (!para) return;
-      line = document.createElement("span");
-      line.className = "card-age";
-      para.appendChild(line);
-    }
-    line.textContent = text;
-  }
-
   function check(card, key) {
     var source = SOURCES[key];
     if (!source) return;
@@ -146,9 +140,8 @@
             stale
               ? "The API answered, but its most recent data is " + describeAge(result.age) +
                 " - the collector may have stopped."
-              : "Data " + describeAge(result.age)
+              : "The API is responding and its data is " + describeAge(result.age) + "."
           );
-          setAgeLine(card, "Data " + describeAge(result.age) + ".");
           return;
         }
 
