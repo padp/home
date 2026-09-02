@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" href="uacj-icon.png">
   <link rel="stylesheet" href="styles.css">
   <script src="local-tool-hint.js" defer></script>
+  <script src="status-check.js" defer></script>
 </head>
 
 <body>
@@ -32,7 +33,8 @@
 
     <ul class="systems">
       <li>
-        <a class="card" href="https://padp.github.io/get-log-files/">
+        <a class="card" href="https://padp.github.io/get-log-files/"
+           data-status="logtable">
           <div class="card-top">
             <h2>Log Table Monitoring System</h2>
             <span class="badge badge-live">Live</span>
@@ -47,7 +49,8 @@
       </li>
 
       <li>
-        <a class="card" href="https://padp.github.io/picos/">
+        <a class="card" href="https://padp.github.io/picos/"
+           data-status="press">
           <div class="card-top">
             <h2>Press Monitoring System</h2>
             <span class="badge badge-live">Live</span>
@@ -61,7 +64,8 @@
       </li>
 
       <li>
-        <a class="card" href="https://padp.github.io/granco_monitor/">
+        <a class="card" href="https://padp.github.io/granco_monitor/"
+           data-status="granco">
           <div class="card-top">
             <h2>Granco Saw Monitoring System</h2>
             <span class="badge badge-live">Live</span>
@@ -75,7 +79,8 @@
       </li>
 
       <li>
-        <a class="card" href="https://padp.github.io/oven_monitor/?oven=large">
+        <a class="card" href="https://padp.github.io/oven_monitor/?oven=large"
+           data-status="oven-large">
           <div class="card-top">
             <h2>Large Aging Oven Monitoring System</h2>
             <span class="badge badge-live">Live</span>
@@ -89,7 +94,8 @@
       </li>
 
       <li>
-        <a class="card" href="https://padp.github.io/oven_monitor/?oven=small">
+        <a class="card" href="https://padp.github.io/oven_monitor/?oven=small"
+           data-status="oven-small">
           <div class="card-top">
             <h2>Small Aging Oven Monitoring System</h2>
             <span class="badge badge-live">Live</span>
@@ -102,6 +108,14 @@
         </a>
       </li>
 
+    </ul>
+
+    <h2 class="section-label">Management</h2>
+    <p class="section-note">
+      Change what the equipment does, rather than watch what it did.
+    </p>
+
+    <ul class="systems">
       <li>
         <a class="card" href="http://uacj-mengr45:3005/" target="_blank" rel="noopener noreferrer"
            data-local-notice="Opening Recipe Setpoint Sync in a new tab — it only loads from the plant network. If that tab shows a connection error, that's why.">

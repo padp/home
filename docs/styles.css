@@ -20,6 +20,10 @@
   --live-soft: #e7f6ec;
   --pending: #b45309;
   --pending-soft: #fef3e2;
+  --stale: #b45309;
+  --stale-soft: #fef3e2;
+  --down: #b91c1c;
+  --down-soft: #fdeaea;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,6 +43,10 @@
     --live-soft: #14301f;
     --pending: #fbbf24;
     --pending-soft: #3a2e14;
+    --stale: #fbbf24;
+    --stale-soft: #3a2e14;
+    --down: #f87171;
+    --down-soft: #3a1a1a;
   }
 }
 
@@ -252,6 +260,47 @@ a.card:focus-visible .card-go .arrow {
 .badge-pending {
   color: var(--pending);
   background: var(--pending-soft);
+}
+
+/* Set by status-check.js once a system's API has actually answered. The
+   markup ships as badge-live so the page still reads correctly with JS off,
+   or before the checks come back. */
+
+.badge-checking {
+  color: var(--color-text-muted);
+  background: var(--color-accent-soft);
+}
+
+.badge-checking::before {
+  animation: badge-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge-checking::before { animation: none; }
+}
+
+.badge-stale {
+  color: var(--stale);
+  background: var(--stale-soft);
+}
+
+.badge-down {
+  color: var(--down);
+  background: var(--down-soft);
+}
+
+/* Age line under a card's description, e.g. "data 2 min old". Only rendered
+   for systems that expose a real data-age signal - see status-check.js. */
+.card-age {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
 }
 
 /* ------------------------------------------------------------ */

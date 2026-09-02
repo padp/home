@@ -3,9 +3,11 @@
 Landing page for the UACJ Paducah plant monitoring dashboards. It explains what the
 monitoring suite is and links out to each system's dashboard.
 
-Static HTML/CSS, no build step. One small vanilla-JS file (`docs/local-tool-hint.js`)
-adds a click-time explanation to the plant-network-only cards; everything else is plain
-markup. Served by GitHub Pages from `docs/` on `main` (Settings -> Pages -> Source:
+Static HTML/CSS, no build step. Two small vanilla-JS files: `docs/local-tool-hint.js`
+adds a click-time explanation to the plant-network-only cards, and
+`docs/status-check.js` replaces the static "Live" badge with a real check against each
+system's API (see "Live status badges" below). Everything else is plain markup. Served
+by GitHub Pages from `docs/` on `main` (Settings -> Pages -> Source:
 Deploy from a branch, `main` / `/docs`), matching how `get-log-files` and
 `granco_monitor` are published.
 
@@ -19,24 +21,65 @@ Deploy from a branch, `main` / `/docs`), matching how `get-log-files` and
 | Large Aging Oven | `padp/oven_monitor` | https://padp.github.io/oven_monitor/?oven=large | Live |
 | Small Aging Oven | `padp/oven_monitor` | https://padp.github.io/oven_monitor/?oven=small | Live |
 | Recipe Setpoint Sync | `padp/index-scs` (local, uacj-mengr45:3005) | http://uacj-mengr45:3005/ | Live, plant-network only |
-| Vision System Database | n/a (local, PAD-LAPTOP-03:5057) | http://PAD-LAPTOP-03:5057 | Live, plant-network only |
-| Press History Search | Press History UI/v2 (local, 10.0.21.130:3080) | http://10.0.21.130:3080 | Live, plant-network only |
+| Vision System Database | n/a (local, uacj-mengr45:5057) | http://uacj-mengr45:5057 | Live, plant-network only |
+| Press History Search | Press History UI/v2 (local, uacj-mengr45:3080) | http://uacj-mengr45:3080 | Live, plant-network only |
+
+The first five are checked live on page load; the last three cannot be (see "Live status
+badges" and "Plant-network-only cards" below).
 
 ## Adding a system
 
-Cards live in `docs/index.html` under two `<ul class="systems">` lists: **Live
-monitoring** (real-time dashboards) and **History & review** (search/analysis tools over
+Cards live in `docs/index.html` under three `<ul class="systems">` lists: **Live
+monitoring** (real-time dashboards), **Management** (tools that change what the equipment
+does, rather than watch what it did) and **History & review** (search/analysis tools over
 past data). Copy an existing `<li>` from whichever fits and adjust the heading, badge,
 description and `href`. A system that isn't live yet should use
 `<div class="card pending">` with a `<span class="badge badge-pending">` instead of
 `<a class="card" href="...">` with `badge-live` -- see git history for the exact markup
 the two oven cards used before their dashboard shipped.
 
-## Plant-network-only cards (Vision System Database, Press History Search)
+## Live status badges
 
-Both link to tools hosted locally on the plant LAN, not reachable from the public
-internet -- `http://PAD-LAPTOP-03:5057` and `http://10.0.21.130:3080` respectively. Two
-things make these different from the other five:
+The "Live" badge used to be a static claim typed into the markup -- it said Live whether
+the collector had written a row thirty seconds ago or died three days ago.
+`docs/status-check.js` now asks each system's API on page load and reports the answer:
+**Checking** -> **Live**, **Stale**/**Stalled**, or **No response**, with the reason in
+the badge's `title` and, where a real data age exists, a "Data 4 min old." line on the
+card.
+
+Two things to understand before extending it:
+
+- **"Recent data" and "recent production" are different questions, and only some of these
+  systems can answer the first.** A press that is genuinely down has perfectly fresh data
+  saying so; calling that "stale" would be wrong. So each system uses the best *true*
+  freshness signal it actually exposes rather than a forced symmetry -- the ovens report
+  `age_s` and the log table reports `updatedAt` (both real data ages), while press and
+  Granco fall back to their own server-computed `stalled` verdict.
+  `seconds_since_last_billet` / `seconds_since_last_cut` are deliberately **not** used:
+  both measure *production*, so a legitimately idle machine would read as a broken one.
+- **Timestamps are only compared client-side when they are unambiguously UTC.** The
+  press's billet `ts` is plant-local naive wall-clock, so subtracting it from `Date.now()`
+  would be off by the whole UTC offset -- the same class of bug that once put a five-hour
+  error in that project's stall banner. Where the server already computed an age or a
+  verdict, that value is used as-is and no date maths happens here at all.
+
+To add a checked card, give its `<li>`'s card element `data-status="<key>"` and add a
+matching entry to `SOURCES` with a `url` and a `read()` that returns either
+`{age: seconds}` (needs `staleAfterSeconds`) or `{stalled: bool}`. A card with no
+`data-status` keeps its static badge. The timeout is 25s, sized for Render free-tier cold
+starts.
+
+Note that the checks only succeed from an allowed origin: `get-log-files` allows
+`https://padp.github.io` specifically, so testing this page from `127.0.0.1` shows the
+log-table card as "No response" even though production is fine. To test locally against
+real origins, intercept `https://padp.github.io/**` in Playwright and fulfil it from
+`docs/` rather than serving over `http://localhost`.
+
+## Plant-network-only cards (Recipe Setpoint Sync, Vision System Database, Press History Search)
+
+All three link to tools hosted locally on the plant LAN, not reachable from the public
+internet -- ports 3005, 5057 and 3080 on `uacj-mengr45`. Two things make these different
+from the other five:
 
 - They're plain `http://`, not `https://`, and this page is served over `https://`.
   Browsers block active requests (`fetch`/`XHR`/`iframe`) from an https page to an http
