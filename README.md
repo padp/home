@@ -23,8 +23,9 @@ Deploy from a branch, `main` / `/docs`), matching how `get-log-files` and
 | Recipe Setpoint Sync | `padp/index-scs` (local, uacj-mengr45:3005) | http://uacj-mengr45:3005/ | Live, plant-network only |
 | Vision System Database | n/a (local, uacj-mengr45:5057) | http://uacj-mengr45:5057 | Live, plant-network only |
 | Press History Search | Press History UI/v2 (local, uacj-mengr45:3080) | http://uacj-mengr45:3080 | Live, plant-network only |
+| Die History | `padp/die-history` (local, uacj-mengr45:5058) | http://uacj-mengr45:5058 | Live, plant-network only |
 
-The first five are checked live on page load; the last three cannot be (see "Live status
+The first five are checked live on page load; the rest cannot be (see "Live status
 badges" and "Plant-network-only cards" below).
 
 ## Adding a system
@@ -77,10 +78,10 @@ log-table card as "No response" even though production is fine. To test locally 
 real origins, intercept `https://padp.github.io/**` in Playwright and fulfil it from
 `docs/` rather than serving over `http://localhost`.
 
-## Plant-network-only cards (Recipe Setpoint Sync, Vision System Database, Press History Search)
+## Plant-network-only cards (Recipe Setpoint Sync, Vision System Database, Press History Search, Die History)
 
-All three link to tools hosted locally on the plant LAN, not reachable from the public
-internet -- ports 3005, 5057 and 3080 on `uacj-mengr45`. Two things make these different
+All four link to tools hosted locally on the plant LAN, not reachable from the public
+internet -- ports 3005, 5057, 3080 and 5058 on `uacj-mengr45`. Two things make these different
 from the other five:
 
 - They're plain `http://`, not `https://`, and this page is served over `https://`.
