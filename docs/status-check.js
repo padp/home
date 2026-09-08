@@ -24,6 +24,8 @@
  *      logtable  updatedAt on /table-state    - real data age, genuine UTC
  *      press     stalled on /press/status     - the system's own verdict
  *      granco    stalled on /status           - the system's own verdict
+ *      alerts    (none) /health               - reachability only; this app has
+ *                                                no "data" of its own to be stale
  *
  *    seconds_since_last_billet / seconds_since_last_cut are deliberately NOT
  *    used as freshness: both measure production activity, so a legitimately
@@ -89,6 +91,13 @@
       url: "https://oven-monitor.onrender.com/api/oven/small/current",
       staleAfterSeconds: 900,
       read: readOvenAge
+    },
+    alerts: {
+      // No age or stall verdict to report - /health just confirms the
+      // Gemini-backed chat endpoint's own process is up. Falls through to
+      // the generic "answered, so it's reachable" verdict below.
+      url: "https://alert-assistant.onrender.com/health",
+      read: function () { return {}; }
     }
   };
 
