@@ -20,10 +20,10 @@ Deploy from a branch, `main` / `/docs`), matching how `get-log-files` and
 | Granco Saw Monitoring | `padp/granco_monitor` | https://padp.github.io/granco_monitor/ | Live |
 | Large Aging Oven | `padp/oven_monitor` | https://padp.github.io/oven_monitor/?oven=large | Live |
 | Small Aging Oven | `padp/oven_monitor` | https://padp.github.io/oven_monitor/?oven=small | Live |
-| Recipe Setpoint Sync | `padp/index-scs` (local, uacj-mengr45:3005) | http://uacj-mengr45:3005/ | Live, plant-network only |
-| Vision System Database | n/a (local, uacj-mengr45:5057) | http://uacj-mengr45:5057 | Live, plant-network only |
-| Press History Search | Press History UI/v2 (local, uacj-mengr45:3080) | http://uacj-mengr45:3080 | Live, plant-network only |
-| Die History | `padp/die-history` (local, uacj-mengr45:5058) | http://uacj-mengr45:5058 | Live, plant-network only |
+| Recipe Setpoint Sync | `padp/index-scs` (local, uacj-mengr45:3005) | http://10.0.20.165:3005/ | Live, plant-network only |
+| Vision System Database | n/a (local, uacj-mengr45:5057) | http://10.0.20.165:5057 | Live, plant-network only |
+| Press History Search | Press History UI/v2 (local, uacj-mengr45:3080) | http://10.0.20.165:3080 | Live, plant-network only |
+| Die History | `padp/die-history` (local, uacj-mengr45:5058) | http://10.0.20.165:5058 | Live, plant-network only |
 
 The first five are checked live on page load; the rest cannot be (see "Live status
 badges" and "Plant-network-only cards" below).
@@ -81,7 +81,10 @@ real origins, intercept `https://padp.github.io/**` in Playwright and fulfil it 
 ## Plant-network-only cards (Recipe Setpoint Sync, Vision System Database, Press History Search, Die History)
 
 All four link to tools hosted locally on the plant LAN, not reachable from the public
-internet -- ports 3005, 5057, 3080 and 5058 on `uacj-mengr45`. Two things make these different
+internet -- ports 3005, 5057, 3080 and 5058 on `uacj-mengr45`, linked by its IP address
+(`10.0.20.165`) rather than the name: the plant DNS record for `uacj-mengr45` points at a dead
+address (`10.0.21.130`), so the name doesn't resolve to the right machine. If DNS is fixed and the
+PC is given a DHCP reservation, the links can go back to the hostname. Two things make these different
 from the other five:
 
 - They're plain `http://`, not `https://`, and this page is served over `https://`.
