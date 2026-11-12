@@ -20,7 +20,6 @@
  *    be wrong. So each system below uses the best TRUE freshness signal it
  *    actually exposes, rather than pretending to a symmetry that isn't there:
  *
- *      oven      age_s on /current            - real data age, server-computed
  *      logtable  updatedAt on /table-state    - real data age, genuine UTC
  *      press     stalled on /press/status     - the system's own verdict
  *      granco    stalled on /status           - the system's own verdict
@@ -38,8 +37,8 @@
  *    banner. Where the server already computed an age or a verdict, that value
  *    is used as-is and no date maths happens here at all.
  *
- * The three plant-network-only cards (Recipe Setpoint Sync, Vision System
- * Database, Press History Search) are deliberately NOT checked and carry no
+ * The plant-network-only cards (Recipe Setpoint Sync, Vision System
+ * Database, Press History Search, and the two aging ovens) are deliberately NOT checked and carry no
  * data-status attribute. They are plain http:// and this page is https://, so
  * the browser blocks the request as mixed content before it is even sent -
  * a platform rule, not something to work around. See README.md.
@@ -82,16 +81,6 @@
         return { stalled: !!(data && data.stalled) };
       }
     },
-    "oven-large": {
-      url: "https://oven-monitor.onrender.com/api/oven/large/current",
-      staleAfterSeconds: 900,
-      read: readOvenAge
-    },
-    "oven-small": {
-      url: "https://oven-monitor.onrender.com/api/oven/small/current",
-      staleAfterSeconds: 900,
-      read: readOvenAge
-    },
     alerts: {
       // No age or stall verdict to report - /health just confirms the
       // Gemini-backed chat endpoint's own process is up. Falls through to
@@ -100,11 +89,6 @@
       read: function () { return {}; }
     }
   };
-
-  function readOvenAge(data) {
-    var age = data && data.age_s;
-    return { age: typeof age === "number" ? age : null };
-  }
 
   function describeAge(seconds) {
     if (seconds < 90) return "just now";

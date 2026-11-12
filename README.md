@@ -18,15 +18,16 @@ Deploy from a branch, `main` / `/docs`), matching how `get-log-files` and
 | Log Table Monitoring | `padp/get-log-files` | https://padp.github.io/get-log-files/ | Live |
 | Press Monitoring | `padp/picos` | https://padp.github.io/picos/ | Live |
 | Granco Saw Monitoring | `padp/granco_monitor` | https://padp.github.io/granco_monitor/ | Live |
-| Large Aging Oven | `padp/oven_monitor` | https://padp.github.io/oven_monitor/?oven=large | Live |
-| Small Aging Oven | `padp/oven_monitor` | https://padp.github.io/oven_monitor/?oven=small | Live |
+| Large Aging Oven | `padp/oven_monitor` (local, uacj-mengr45:8010) | http://10.0.20.165:8010/?oven=large | Live, plant-network only |
+| Small Aging Oven | `padp/oven_monitor` (local, uacj-mengr45:8010) | http://10.0.20.165:8010/?oven=small | Live, plant-network only |
 | Recipe Setpoint Sync | `padp/index-scs` (local, uacj-mengr45:3005) | http://10.0.20.165:3005/ | Live, plant-network only |
 | Vision System Database | n/a (local, uacj-mengr45:5057) | http://10.0.20.165:5057 | Live, plant-network only |
 | Press History Search | Press History UI/v2 (local, uacj-mengr45:3080) | http://10.0.20.165:3080 | Live, plant-network only |
 | Die History | `padp/die-history` (local, uacj-mengr45:5058) | http://10.0.20.165:5058 | Live, plant-network only |
 
-The first five are checked live on page load; the rest cannot be (see "Live status
-badges" and "Plant-network-only cards" below).
+The first three are checked live on page load; the rest cannot be (see "Live status
+badges" and "Plant-network-only cards" below). The ovens moved off Render to the plant
+host, so their cards lost their live check with the move.
 
 ## Adding a system
 
